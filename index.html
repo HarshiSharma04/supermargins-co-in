@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SuperMargins — मुनाफ़ा पहले</title>
+  <meta name="description" content="India's Wholesale Operating System. Export-quality goods at factory-direct prices with 45-day trade credit. Launching soon.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Syne:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #0D0626;
+      --bg2:         #170B3E;
+      --gold:        #FFB300;
+      --gold-dim:    rgba(255,179,0,0.18);
+      --teal:        #00C4B4;
+      --teal-dim:    rgba(0,196,180,0.12);
+      --white:       #FFFFFF;
+      --text-sec:    rgba(255,255,255,0.62);
+      --text-muted:  rgba(255,255,255,0.32);
+      --card:        rgba(255,255,255,0.055);
+      --card-border: rgba(255,255,255,0.09);
+      --card-hover:  rgba(0,196,180,0.07);
+      --card-hborder:rgba(0,196,180,0.28);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--white);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── ATMOSPHERE ── */
+    .atm {
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 0;
+      overflow: hidden;
+    }
+    .atm-tl {
+      position: absolute; top: -15%; left: -10%;
+      width: 55%; height: 55%;
+      background: radial-gradient(ellipse, rgba(0,196,180,0.09) 0%, transparent 68%);
+    }
+    .atm-br {
+      position: absolute; bottom: -15%; right: -10%;
+      width: 55%; height: 55%;
+      background: radial-gradient(ellipse, rgba(120,60,240,0.13) 0%, transparent 68%);
+    }
+    .atm-center {
+      position: absolute; top: 30%; left: 35%;
+      width: 30%; height: 40%;
+      background: radial-gradient(ellipse, rgba(255,179,0,0.04) 0%, transparent 70%);
+    }
+
+    /* Subtle diamond grid overlay */
+    .grid-overlay {
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 0;
+      opacity: 0.028;
+      background-image:
+        repeating-linear-gradient(45deg,  #FFB300 0, #FFB300 1px, transparent 1px, transparent 50%),
+        repeating-linear-gradient(-45deg, #FFB300 0, #FFB300 1px, transparent 1px, transparent 50%);
+      background-size: 42px 42px;
+    }
+
+    /* ── PAGE WRAPPER ── */
+    .page {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 28px 52px;
+      opacity: 0;
+      animation: fadeDown 0.7s ease forwards 0.1s;
+    }
+
+    .logo { display: flex; flex-direction: column; gap: 3px; }
+
+    .logo-mark {
+      display: flex; align-items: baseline; gap: 1px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 23px;
+      letter-spacing: -0.5px;
+    }
+    .logo-s  { color: var(--white); }
+    .logo-m  { color: var(--teal); }
+    .logo-go {
+      background: #D92B2B;
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 8.5px; font-weight: 700;
+      padding: 2px 5px; border-radius: 4px;
+      letter-spacing: 0.6px;
+      margin-left: 3px;
+      vertical-align: super;
+    }
+    .logo-sub {
+      font-size: 8.5px; font-weight: 600;
+      letter-spacing: 2.8px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .launch-pill {
+      display: flex; align-items: center; gap: 9px;
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 9px 18px; border-radius: 100px;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 1px; color: var(--text-sec);
+      text-transform: uppercase;
+    }
+    .launch-dot {
+      width: 7px; height: 7px;
+      background: var(--teal); border-radius: 50%;
+      animation: blink 2s ease-in-out infinite;
+    }
+    @keyframes blink {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:0.4; transform:scale(0.75); }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      flex: 1;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 20px 24px 64px;
+      gap: 0;
+    }
+
+    .hero-intro {
+      font-family: 'Baloo 2', sans-serif;
+      font-size: 14.5px; font-weight: 500;
+      color: var(--text-sec); letter-spacing: 0.3px;
+      margin-bottom: 14px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.3s;
+    }
+    .hero-intro em { color: var(--teal); font-style: normal; }
+
+    /* THE HERO STATEMENT */
+    .munaafa {
+      font-family: 'Baloo 2', sans-serif;
+      font-size: clamp(70px, 13vw, 136px);
+      font-weight: 800;
+      color: var(--gold);
+      line-height: 1.0;
+      letter-spacing: -2px;
+      margin-bottom: 4px;
+      opacity: 0;
+      animation: fadeUp 0.85s ease forwards 0.5s, shimmer 5s ease-in-out infinite 2s;
+    }
+    @keyframes shimmer {
+      0%,100% { text-shadow: 0 0 60px rgba(255,179,0,0.22), 0 0 120px rgba(255,179,0,0.08); }
+      50%      { text-shadow: 0 0 90px rgba(255,179,0,0.38), 0 0 200px rgba(255,179,0,0.14); }
+    }
+
+    /* gradient rule under munaafa */
+    .rule {
+      width: 72px; height: 2.5px;
+      background: linear-gradient(90deg, var(--teal) 0%, var(--gold) 100%);
+      border-radius: 2px;
+      margin: 0 auto 20px;
+      opacity: 0;
+      animation: scaleIn 0.6s ease forwards 0.7s;
+    }
+    @keyframes scaleIn {
+      from { opacity:0; transform: scaleX(0); }
+      to   { opacity:1; transform: scaleX(1); }
+    }
+
+    .hero-h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(24px, 4.2vw, 50px);
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      margin-bottom: 18px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.75s;
+    }
+    .hero-h1 span { color: var(--teal); }
+
+    .hero-sub {
+      font-size: clamp(14px, 1.8vw, 16.5px);
+      font-weight: 400;
+      color: var(--text-sec);
+      line-height: 1.75;
+      max-width: 500px;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.9s;
+    }
+    .hero-sub strong { color: var(--white); font-weight: 600; }
+
+    /* ── COUNTDOWN ── */
+    .countdown-wrap {
+      margin-bottom: 42px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 1.05s;
+    }
+    .cdown-lbl {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .cdown {
+      display: flex; gap: 12px; align-items: center;
+    }
+    .cdown-unit {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 7px;
+    }
+    .cdown-num {
+      width: 78px; height: 78px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      font-family: 'Syne', sans-serif;
+      font-size: 34px; font-weight: 700;
+      color: var(--white);
+      position: relative; overflow: hidden;
+    }
+    .cdown-num::after {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+    }
+    .cdown-sep {
+      font-family: 'Syne', sans-serif;
+      font-size: 28px; font-weight: 700;
+      color: var(--gold); opacity: 0.55;
+      padding-bottom: 22px;
+    }
+    .cdown-lbl2 {
+      font-size: 9px; font-weight: 600;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* ── EMAIL FORM ── */
+    .form-wrap {
+      width: 100%; max-width: 476px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 1.15s;
+    }
+    .form-row {
+      display: flex; gap: 0;
+      margin-bottom: 12px;
+    }
+    .email-input {
+      flex: 1;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.11);
+      border-right: none;
+      border-radius: 13px 0 0 13px;
+      padding: 15px 20px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px; color: var(--white);
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .email-input::placeholder { color: var(--text-muted); }
+    .email-input:focus {
+      border-color: rgba(0,196,180,0.38);
+      background: rgba(0,196,180,0.05);
+    }
+    .email-btn {
+      background: var(--teal);
+      color: #0A0520;
+      border: none;
+      border-radius: 0 13px 13px 0;
+      padding: 15px 26px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px; font-weight: 700;
+      cursor: pointer; white-space: nowrap;
+      transition: background 0.2s, transform 0.12s;
+      letter-spacing: 0.2px;
+    }
+    .email-btn:hover  { background: #00DAC8; }
+    .email-btn:active { transform: scale(0.97); }
+
+    .form-note {
+      font-size: 11.5px; color: var(--text-muted);
+      margin-bottom: 0;
+    }
+    .form-success {
+      display: none;
+      font-size: 13px; font-weight: 600;
+      color: var(--teal); margin-top: 4px;
+    }
+
+    /* ── STATS ── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 11px;
+      width: 100%; max-width: 860px;
+      margin-top: 56px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 1.3s;
+    }
+    .stat {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 20px 14px;
+      text-align: center;
+      cursor: default;
+      transition: background 0.22s, border-color 0.22s, transform 0.2s;
+    }
+    .stat:hover {
+      background: var(--card-hover);
+      border-color: var(--card-hborder);
+      transform: translateY(-3px);
+    }
+    .stat-n {
+      font-family: 'Syne', sans-serif;
+      font-size: 21px; font-weight: 800;
+      color: var(--gold);
+      margin-bottom: 7px;
+      letter-spacing: -0.5px;
+    }
+    .stat-l {
+      font-size: 9.5px; font-weight: 600;
+      letter-spacing: 0.9px; text-transform: uppercase;
+      color: var(--text-sec); line-height: 1.45;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 24px;
+      font-size: 11px; color: var(--text-muted);
+      letter-spacing: 0.5px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 1.5s;
+    }
+
+    /* ── KEYFRAMES ── */
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(22px); }
+      to   { opacity:1; transform:translateY(0);    }
+    }
+    @keyframes fadeDown {
+      from { opacity:0; transform:translateY(-14px); }
+      to   { opacity:1; transform:translateY(0);     }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 860px) {
+      .stats { grid-template-columns: repeat(3,1fr); max-width: 560px; }
+    }
+    @media (max-width: 640px) {
+      nav { padding: 20px 24px; }
+      .logo-mark { font-size: 19px; }
+      .launch-pill span { display: none; }
+      .cdown-num { width: 64px; height: 64px; font-size: 28px; }
+      .cdown-gap { gap: 8px; }
+      .form-row { flex-direction: column; }
+      .email-input {
+        border-right: 1px solid rgba(255,255,255,0.11);
+        border-bottom: none;
+        border-radius: 13px 13px 0 0;
+      }
+      .email-btn { border-radius: 0 0 13px 13px; }
+      .stats { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 380px) {
+      .munaafa { letter-spacing: -1px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="atm">
+    <div class="atm-tl"></div>
+    <div class="atm-br"></div>
+    <div class="atm-center"></div>
+  </div>
+  <div class="grid-overlay"></div>
+
+  <div class="page">
+
+    <!-- NAV -->
+    <nav>
+      <div class="logo">
+        <div class="logo-mark">
+          <span class="logo-s">super</span><span class="logo-m">margins</span><span class="logo-go">GO</span>
+        </div>
+        <div class="logo-sub">Cashless &nbsp;·&nbsp; One Click &nbsp;·&nbsp; Wholesale</div>
+      </div>
+      <div class="launch-pill">
+        <div class="launch-dot"></div>
+        <span>Launching in India</span>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+
+      <p class="hero-intro">
+        भारत का थोक ऑपरेटिंग सिस्टम &nbsp;—&nbsp; <em>जल्द आ रहा है</em>
+      </p>
+
+      <div class="munaafa">मुनाफ़ा पहले</div>
+
+      <div class="rule"></div>
+
+      <h1 class="hero-h1">India's Wholesale <span>Operating System</span></h1>
+
+      <p class="hero-sub">
+        Export-quality goods at <strong>factory-direct prices</strong>.<br>
+        <strong>45-day trade credit</strong> via NBFC. AQL certified quality.<br>
+        <strong>Doorstep delivery</strong> across India.
+      </p>
+
+      <!-- COUNTDOWN -->
+      <div class="countdown-wrap">
+        <div class="cdown-lbl">Launching — India's Independence Day, 15 August 2026</div>
+        <div class="cdown cdown-gap" id="cdown">
+          <div class="cdown-unit">
+            <div class="cdown-num" id="cd-d">00</div>
+            <div class="cdown-lbl2">Days</div>
+          </div>
+          <div class="cdown-sep">:</div>
+          <div class="cdown-unit">
+            <div class="cdown-num" id="cd-h">00</div>
+            <div class="cdown-lbl2">Hours</div>
+          </div>
+          <div class="cdown-sep">:</div>
+          <div class="cdown-unit">
+            <div class="cdown-num" id="cd-m">00</div>
+            <div class="cdown-lbl2">Mins</div>
+          </div>
+          <div class="cdown-sep">:</div>
+          <div class="cdown-unit">
+            <div class="cdown-num" id="cd-s">00</div>
+            <div class="cdown-lbl2">Secs</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EMAIL -->
+      <div class="form-wrap">
+        <div class="form-row">
+          <input type="email" class="email-input" id="ei" placeholder="Enter your email for early access">
+          <button class="email-btn" id="ebtn" onclick="submit()">पहले जानें &nbsp;→</button>
+        </div>
+        <p class="form-note" id="fnote">Be the first wholesale trader to access India's Wholesale OS.</p>
+        <p class="form-success" id="fsuc">✓ You're on the early access list. We'll be in touch shortly.</p>
+      </div>
+
+      <!-- STATS -->
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">45-Day</div>
+          <div class="stat-l">Trade Credit</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">233+</div>
+          <div class="stat-l">Active Buyers</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">28%+</div>
+          <div class="stat-l">Gross Margins</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">50+</div>
+          <div class="stat-l">Categories</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">AQL</div>
+          <div class="stat-l">Quality Certified</div>
+        </div>
+      </div>
+
+    </section>
+
+    <footer>
+      © 2026 SuperMargins &nbsp;·&nbsp; Cost Price Discount Stores Pvt. Ltd. &nbsp;·&nbsp; India
+    </footer>
+  </div>
+
+  <script>
+    // ── Countdown to Aug 15, 2026 00:00:00 IST ──
+    (function tick() {
+      var target = new Date('2026-08-15T00:00:00+05:30').getTime();
+      function update() {
+        var diff = target - Date.now();
+        if (diff < 0) diff = 0;
+        var d = Math.floor(diff / 86400000);
+        var h = Math.floor((diff % 86400000) / 3600000);
+        var m = Math.floor((diff % 3600000) / 60000);
+        var s = Math.floor((diff % 60000) / 1000);
+        document.getElementById('cd-d').textContent = String(d).padStart(2,'0');
+        document.getElementById('cd-h').textContent = String(h).padStart(2,'0');
+        document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
+        document.getElementById('cd-s').textContent = String(s).padStart(2,'0');
+      }
+      update();
+      setInterval(update, 1000);
+    })();
+
+    // ── Email submit ──
+    function submit() {
+      var inp = document.getElementById('ei');
+      var btn = document.getElementById('ebtn');
+      var note = document.getElementById('fnote');
+      var suc = document.getElementById('fsuc');
+      var v = inp.value.trim();
+      if (!v || !v.includes('@') || !v.includes('.')) {
+        inp.style.borderColor = 'rgba(220,60,60,0.5)';
+        inp.placeholder = 'Please enter a valid email address';
+        setTimeout(function() {
+          inp.style.borderColor = '';
+          inp.placeholder = 'Enter your email for early access';
+        }, 2500);
+        return;
+      }
+      btn.textContent = '✓  Registered';
+      btn.style.background = '#22c55e';
+      btn.style.color = '#fff';
+      btn.disabled = true;
+      inp.disabled = true;
+      note.style.display = 'none';
+      suc.style.display = 'block';
+    }
+
+    // Allow Enter key on input
+    document.getElementById('ei').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') submit();
+    });
+  </script>
+
+</body>
+</html>
